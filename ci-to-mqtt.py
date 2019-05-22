@@ -4,6 +4,9 @@ import paho.mqtt.client as mqtt
 from http.server import HTTPServer, BaseHTTPRequestHandler
 import logging
 
+MQTT_BROKER_HOST = 'localhost'
+MQTT_TOPIC = 'build'
+
 class MqttProxy():
 	def __init__(self, broker, topic):
 		self.client = mqtt.Client()
@@ -18,7 +21,7 @@ class MqttProxy():
 		self.client.publish(self.topic, message)
 
 class WebhookHandler(BaseHTTPRequestHandler):
-	mqttc = MqttProxy('localhost', 'build')
+	mqttc = MqttProxy(MQTT_BROKER_HOST, MQTT_TOPIC)
 
 	def do_POST(self):
 		request_body = self.rfile.read(int(self.headers.get('Content-Length')))
@@ -37,12 +40,12 @@ class WebhookMonitor():
 	def __init__(self, webhook_handler):
 		self.handler = webhook_handler
 
-	def run(self, port):
+	def run(self, port = 80):
 		server_address = ('', port)
 		httpd = HTTPServer(server_address, self.handler)
 		httpd.serve_forever()
 
 logging.basicConfig(level=logging.INFO)
 webhook_monitor = WebhookMonitor(WebhookHandler)
-webhook_monitor.run(9999)
+webhook_monitor.run()
 

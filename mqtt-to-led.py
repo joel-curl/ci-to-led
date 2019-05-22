@@ -6,6 +6,11 @@ from gpiozero import LED
 import paho.mqtt.client as mqtt
 import logging
 
+RED_CHAN = 3
+GREEN_CHAN = 2
+MQTT_BROKER_HOST = '3.216.43.142'
+MQTT_TOPIC = 'build'
+
 class Status(Enum):
 	INIT = 0
 	SUCCESSFUL = 1
@@ -95,7 +100,7 @@ class MqttListener():
 		self.client.loop_forever()
 
 logging.basicConfig(level=logging.INFO)
-manager = NotificationManager(RedGreenLedNotification(3,2))
-mqtt_listener = MqttListener('localhost', 'build', manager)
+manager = NotificationManager(RedGreenLedNotification(RED_CHAN, GREEN_CHAN))
+mqtt_listener = MqttListener(MQTT_BROKER_HOST, MQTT_TOPIC, manager)
 mqtt_listener.listen()
 
