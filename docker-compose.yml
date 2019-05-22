@@ -1,4 +1,4 @@
-version: "3"
+version: "2"
 
 services:
   mqtt:
@@ -9,7 +9,23 @@ services:
       - .:/proj
     command: ./ci-to-mqtt.py
     environment:
-            - MQTT_BROKER_HOST
-            - MQTT_TOPIC
-            - LOG_LEVEL
+      - MQTT_BROKER_HOST
+      - MQTT_TOPIC
+      - LOG_LEVEL
+
+  rpi:
+    build:
+      context: .
+      dockerfile: DockerfileRpi
+    volumes:
+      - .:/proj
+      - /dev/gpiomem:/dev/gpiomem
+    command: ./mqtt-to-led.py
+    environment:
+      - RED_CHAN
+      - GREEN_CHAN
+      - MQTT_BROKER_HOST
+      - MQTT_TOPIC
+      - LOG_LEVEL
+    privileged: true
 

@@ -1,0 +1,12 @@
+FROM armhf/alpine:3.5
+
+RUN mkdir -p /proj
+WORKDIR /proj
+
+RUN apk update
+RUN apk add git bash
+RUN apk add python3
+RUN pip3 install pyyaml gpiozero paho-mqtt
+
+CMD bash
+

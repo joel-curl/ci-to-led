@@ -7,7 +7,7 @@ import logging
 
 MQTT_BROKER_HOST = os.getenv('MQTT_BROKER_HOST', 'localhost')
 MQTT_TOPIC = os.getenv('MQTT_TOPIC', 'build')
-LOG_LEVEL = os.getenv('LOG_LEVEL', logging.DEBUG)
+LOG_LEVEL = int(os.getenv('LOG_LEVEL', logging.DEBUG))
 
 class MqttProxy():
         def __init__(self, broker, topic):

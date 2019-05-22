@@ -11,7 +11,7 @@ RED_CHAN = os.getenv('RED_CHAN', 3)
 GREEN_CHAN = os.getenv('GREEN_CHAN', 2)
 MQTT_BROKER_HOST = os.getenv('MQTT_BROKER_HOST', 'localhost')
 MQTT_TOPIC = os.getenv('MQTT_TOPIC', 'build')
-LOG_LEVEL = os.getenv('LOG_LEVEL', 'logging.DEBUG')
+LOG_LEVEL = int(os.getenv('LOG_LEVEL', logging.DEBUG))
 
 class Status(Enum):
 	INIT = 0
