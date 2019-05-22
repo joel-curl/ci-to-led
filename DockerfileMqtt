@@ -1,0 +1,14 @@
+FROM alpine:3.9.4
+
+RUN apk update
+RUN apk add mosquitto git bash
+RUN apk add python3 py3-paho-mqtt
+
+RUN mkdir -p /proj
+WORKDIR /proj
+COPY . /proj
+
+CMD bash
+EXPOSE 80
+EXPOSE 1883
+

@@ -1,0 +1,15 @@
+version: "3"
+
+services:
+  mqtt:
+    build:
+      context: .
+      dockerfile: DockerfileMqtt
+    volumes:
+      - .:/proj
+    command: ./ci-to-mqtt.py
+    environment:
+            - MQTT_BROKER_HOST
+            - MQTT_TOPIC
+            - LOG_LEVEL
+
