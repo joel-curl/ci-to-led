@@ -4,12 +4,14 @@ import yaml
 from enum import Enum
 from gpiozero import LED
 import paho.mqtt.client as mqtt
+import os
 import logging
 
-RED_CHAN = 3
-GREEN_CHAN = 2
-MQTT_BROKER_HOST = '3.216.43.142'
-MQTT_TOPIC = 'build'
+RED_CHAN = os.getenv('RED_CHAN', 3)
+GREEN_CHAN = os.getenv('GREEN_CHAN', 2)
+MQTT_BROKER_HOST = os.getenv('MQTT_BROKER_HOST', 'localhost')
+MQTT_TOPIC = os.getenv('MQTT_TOPIC', 'build')
+LOG_LEVEL = os.getenv('LOG_LEVEL', 'logging.DEBUG')
 
 class Status(Enum):
 	INIT = 0
@@ -99,7 +101,7 @@ class MqttListener():
 		self.logger.info('Connected to {}, listening to {}'.format(self.broker, self.topic))
 		self.client.loop_forever()
 
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(level = LOG_LEVEL)
 manager = NotificationManager(RedGreenLedNotification(RED_CHAN, GREEN_CHAN))
 mqtt_listener = MqttListener(MQTT_BROKER_HOST, MQTT_TOPIC, manager)
 mqtt_listener.listen()

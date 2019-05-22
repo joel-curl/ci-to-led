@@ -1,0 +1,18 @@
+version: "3"
+
+services:
+  mqtt:
+    build:
+      context: .
+      dockerfile: DockerfileMqtt
+    volumes:
+      - .:/proj
+    command: bash -c "mosquitto & ./ci-to-mqtt.py"
+    ports:
+            - "80:80"
+            - "1883:1883"
+    environment:
+            - MQTT_BROKER_HOST
+            - MQTT_TOPIC
+            - LOG_LEVEL
+
