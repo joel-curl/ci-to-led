@@ -8,5 +8,7 @@ RUN apk add git bash
 RUN apk add python3
 RUN pip3 install pyyaml gpiozero paho-mqtt
 
+COPY . /proj
+
 CMD bash
 

@@ -21,6 +21,7 @@ class MqttProxy():
                 self.logger.debug(message)
                 self.client.connect(self.broker)
                 self.client.publish(self.topic, message)
+                self.client.disconnect()
 
 class WebhookHandler(BaseHTTPRequestHandler):
         mqttc = MqttProxy(MQTT_BROKER_HOST, MQTT_TOPIC)

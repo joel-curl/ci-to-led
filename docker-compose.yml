@@ -7,7 +7,10 @@ services:
       dockerfile: DockerfileMqtt
     volumes:
       - .:/proj
-    command: ./ci-to-mqtt.py
+    command: bash -c "mosquitto & ./ci-to-mqtt.py"
+    ports:
+      - "80:80"
+      - "1883:1883"
     environment:
       - MQTT_BROKER_HOST
       - MQTT_TOPIC

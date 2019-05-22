@@ -6,8 +6,8 @@ After=network.target
 After=docker.service
 
 [Service]
-ExecStart=/bin/bash -c "cd /etc/ci-to-led/; sudo MQTT_BROKER_HOST=3.216.43.142 docker-compose up -d rpi"
-ExecStop=/bin/bash -c "cd /etc/ci-to-led/; sudo docker-compose down rpi"
+ExecStart=/bin/bash -c "cd /etc/ci-to-led/; sudo MQTT_BROKER_HOST=3.216.43.142 docker-compose up rpi"
+ExecStop=/bin/bash -c "cd /etc/ci-to-led/; sudo docker-compose down"
 Restart=on-failure
 KillMode=process
 
